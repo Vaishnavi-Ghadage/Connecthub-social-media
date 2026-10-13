@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications | ConnectHub</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #4f46e5;
+            color: white;
+            padding: 18px 30px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .container {
+            width: 600px;
+            max-width: 95%;
+            margin: 30px auto;
+        }
+
+        .notification {
+            background: white;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .notification a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .date {
+            display: block;
+            color: #777;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <strong>ConnectHub</strong>
+    &nbsp;&nbsp;
+    <a href="{% url 'home' %}">Home</a>
+</div>
+
+<div class="container">
+
+    <h2>🔔 Notifications</h2>
+
+    {% for notification in notifications %}
+
+        <div class="notification">
+
+            {% if notification.notification_type == 'like' %}
+
+                ❤️
+                <a href="{% url 'profile' notification.sender.username %}">
+                    @{{ notification.sender.username }}
+                </a>
+                liked your post.
+
+            {% elif notification.notification_type == 'follow' %}
+
+                👤
+                <a href="{% url 'profile' notification.sender.username %}">
+                    @{{ notification.sender.username }}
+                </a>
+                started following you.
+
+            {% else %}
+
+                You have a new notification.
+
+            {% endif %}
+
+            <span class="date">
+                {{ notification.created_at|date:"d M Y, h:i A" }}
+            </span>
+
+        </div>
+
+    {% empty %}
+
+        <div class="notification">
+            You're all caught up! No notifications yet. 🎉
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

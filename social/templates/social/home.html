@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ConnectHub</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #6c5ce7;
+        --primary-dark: #5541d7;
+        --background: #f5f6fc;
+        --surface: #ffffff;
+        --text: #25253a;
+        --muted: #85859a;
+        --border: #ececf4;
+        --shadow: 0 5px 24px rgba(35, 30, 90, 0.06);
+    }
+
+    body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        background: var(--background);
+        color: var(--text);
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .navbar h1 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 27px;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .navbar > div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .navbar a {
+        color: #55556d;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+        transition: color 0.2s ease;
+    }
+
+    .navbar a:hover {
+        color: var(--primary);
+    }
+
+    .navbar span {
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .container {
+        width: 680px;
+        max-width: 94%;
+        margin: 32px auto;
+    }
+
+    .create-post,
+    .post {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        margin-bottom: 22px;
+        box-shadow: var(--shadow);
+    }
+
+    .create-post h2 {
+        font-size: 20px;
+        margin: 0 0 18px;
+    }
+
+    .create-post textarea {
+        width: 100%;
+        min-height: 110px;
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fafaff;
+        color: var(--text);
+        font: inherit;
+        resize: vertical;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .create-post textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+    }
+
+    input[type="file"] {
+        display: block;
+        max-width: 100%;
+        margin: 14px 0;
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    button {
+        font: inherit;
+    }
+
+    .create-post button,
+    .post-actions button,
+    .post form button {
+        border: none;
+        border-radius: 10px;
+        background: var(--primary);
+        color: white;
+        padding: 11px 18px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .create-post button:hover,
+    .post-actions button:hover,
+    .post form button:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+    }
+
+    .post-user {
+        font-size: 15px;
+        font-weight: 750;
+        margin-bottom: 15px;
+    }
+
+    .post-user a {
+        color: var(--primary);
+    }
+
+    .post-user a:hover {
+        text-decoration: underline;
+    }
+
+    .post-content {
+        font-size: 15px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        margin-bottom: 15px;
+    }
+
+    .post-image {
+        margin: 15px 0;
+        overflow: hidden;
+        border-radius: 14px;
+        background: #f3f3f9;
+    }
+
+    .post-image img {
+        display: block;
+        width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+    }
+
+    .post small {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .post-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .post-actions span {
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    .post hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 22px 0;
+    }
+
+    .post h4 {
+        margin: 0 0 15px;
+        font-size: 15px;
+    }
+
+    .post p {
+        overflow-wrap: anywhere;
+    }
+
+    .post p strong {
+        color: var(--primary);
+        font-size: 13px;
+    }
+
+    .post form input[type="text"] {
+        width: calc(100% - 110px);
+        max-width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font: inherit;
+        outline: none;
+    }
+
+    .post form input[type="text"]:focus {
+        border-color: var(--primary);
+    }
+
+    .post form button {
+        margin-left: 5px;
+    }
+
+    .post a {
+        color: var(--primary);
+    }
+
+    @media (max-width: 650px) {
+        .navbar {
+            padding: 15px 4%;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+        }
+
+        .navbar > div {
+            justify-content: flex-start;
+            gap: 13px;
+        }
+
+        .navbar a {
+            font-size: 13px;
+        }
+
+        .container {
+            margin: 20px auto;
+        }
+
+        .create-post,
+        .post {
+            padding: 17px;
+            border-radius: 14px;
+        }
+
+        .post form input[type="text"] {
+            width: 100%;
+        }
+
+        .post form button {
+            margin-left: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="navbar">
+
+    <h1>ConnectHub</h1>
+
+    <div>
+        <a href="{% url 'home' %}">Home</a>
+
+        {% if user.is_authenticated %}
+          <span>Hello, {{ user.username }} 👋</span>
+        <a href="{% url 'profile' user.username %}">My Profile
+        <a href="{% url 'notifications' %}">🔔 Notifications
+        <a href="{% url 'search_users' %}">🔍 Search</a>
+        
+
+          
+
+            <a href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">Login</a>
+
+            <a href="{% url 'register' %}">Register</a>
+
+        {% endif %}
+    </div>
+
+</div>
+
+    <div class="container">
+
+        <div class="create-post">
+    <h2>Create a Post</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <textarea
+            name="content"
+            placeholder="What's on your mind?"
+            required></textarea>
+
+        <br>
+
+        <button type="submit">Create Post</button>
+    </form>
+</div>
+
+     {% for post in posts %}
+
+<div class="post">
+
+    <div class="post-user">
+         <a href="{% url 'profile' post.user.username %}">
+             @{{ post.user.username }}
+         </a>
+       
+    </div>
+
+    <div class="post-content">
+        {{ post.content }}
+    </div>
+
+    <small>{{ post.created_at|date:"d M Y, h:i A" }}</small>
+
+    <div class="post-actions">
+
+        {% if user.is_authenticated %}
+
+        <form method="POST"
+              action="{% url 'like_post' post.id %}"
+              style="display:inline;">
+
+            {% csrf_token %}
+
+            {% if user in post.likes.all %}
+                <button type="submit">❤️ Unlike</button>
+            {% else %}
+                <button type="submit">🤍 Like</button>
+            {% endif %}
+
+        </form>
+
+        {% else %}
+
+        <a href="{% url 'login' %}">Login to like</a>
+
+        {% endif %}
+
+        <span>
+            {{ post.likes.count }} likes
+        </span>
+
+    </div>
+
+    <hr>
+
+    <h4>💬 Comments</h4>
+
+    {% for comment in post.comment_set.all %}
+
+        <p>
+            <strong>@{{ comment.user.username }}</strong>:
+            {{ comment.content }}
+        </p>
+
+    {% empty %}
+
+        <p>No comments yet. Be the first!</p>
+
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <textarea
+        name="content"
+        placeholder="What's on your mind?"
+    ></textarea>
+
+    <br><br>
+
+    <label for="post-image">Add a photo:</label>
+
+    <input
+        type="file"
+        id="post-image"
+        name="image"
+        accept="image/*"
+    >
+
+    <br>
+
+    <button type="submit">Create Post</button>
+</form>
+
+    {% else %}
+
+    <p>
+        <a href="{% url 'login' %}">Login</a> to comment.
+    </p>
+
+    {% endif %}
+
+</div>
+
+{% empty %}
+
+<div class="post">
+    <p>No posts yet. Be the first to post! 🎉</p>
+</div>
+
+{% endfor %}   
+
+    </div>
+{% if post.content %}
+    <div class="post-content">
+        {{ post.content }}
+    </div>
+{% endif %}
+
+{% if post.image %}
+    <div class="post-image">
+        <img
+            src="{{ post.image.url }}"
+            alt="Post by {{ post.user.username }}"
+        >
+    </div>
+{% endif %}
+
+</body>
+</html>
