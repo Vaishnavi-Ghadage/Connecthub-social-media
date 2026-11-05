@@ -116,6 +116,20 @@ The main objective of ConnectHub is to develop a dynamic social networking appli
 - Improved responsive UI.
 - Post sharing and bookmarking.
 
+   📸 Screenshots
+
+### Homepage
+![Homepage]("C:\Users\gvais\OneDrive\New folder (2)\Pictures\Screenshots\Screenshot 2026-11-05 200946.png")
+
+### log in page
+![News Feed]("C:\Users\gvais\OneDrive\New folder (2)\Pictures\Screenshots\Screenshot 2026-11-05 201005.png")
+
+### User Profile
+![User Profile]("C:\Users\gvais\OneDrive\New folder (2)\Pictures\Screenshots\Screenshot 2026-11-05 201052.png")
+
+### Create Post
+![Create Post]("C:\Users\gvais\OneDrive\New folder (2)\Pictures\Screenshots\Screenshot 2026-11-05 201030.png")
+
  👩‍💻 Developer
 
 **Vaishnavi Ghadage**
